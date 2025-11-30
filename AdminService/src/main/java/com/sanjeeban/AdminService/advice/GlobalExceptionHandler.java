@@ -1,6 +1,7 @@
 package com.sanjeeban.AdminService.advice;
 
 
+import com.sanjeeban.AdminService.customException.ManagerInvalidException;
 import com.sanjeeban.AdminService.customException.ResidentNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,19 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
+
+    @ExceptionHandler(ManagerInvalidException.class)
+    public ResponseEntity<Map<String,Object>> handleMangerInvalid(ManagerInvalidException ex){
+        Map<String,Object> body = Map.of(
+                "timestamp", LocalDateTime.now(),
+                "status", HttpStatus.NOT_FOUND.value(),
+                "error", "Manager is Invalid",
+                "message", ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+
 
 
 }

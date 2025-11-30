@@ -29,6 +29,9 @@ public class Technician {
     @Column(name="role")
     private String role;
 
+
+
+
     public Long getTechnicianId() {
         return technicianId;
     }

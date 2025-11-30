@@ -41,16 +41,16 @@ VALUES (205, 'Anil', 'Roy', 40, 'tech');
 
 -- Insert Managers into facility_workorder.t_manager
 INSERT INTO facility_workorder.t_manager (manager_id, role, primary_block)
-VALUES (101, 'mng', 'Block-1');
+VALUES ('MNG0000001A', 'mng', 'Block-1');
 
 INSERT INTO facility_workorder.t_manager (manager_id, role, primary_block)
-VALUES (102, 'mng', 'Block-2');
+VALUES ('MNG0000002B', 'mng', 'Block-2');
 
 INSERT INTO facility_workorder.t_manager (manager_id, role, primary_block)
-VALUES (103, 'mng', 'Block-3');
+VALUES ('MNG0000003C', 'mng', 'Block-3');
 
 INSERT INTO facility_workorder.t_manager (manager_id, role, primary_block)
-VALUES (104, 'mng', 'Block-1');
+VALUES ('MNG0000004D', 'mng', 'Block-1');
 
 INSERT INTO facility_workorder.t_manager (manager_id, role, primary_block)
-VALUES (105, 'mng', 'Block-2');
+VALUES ('MNG0000005E', 'mng', 'Block-2');

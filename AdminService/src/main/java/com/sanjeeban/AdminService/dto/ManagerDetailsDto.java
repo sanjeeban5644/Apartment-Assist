@@ -1,29 +1,24 @@
-package com.sanjeeban.AdminService.entity;
+package com.sanjeeban.AdminService.dto;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class ManagerDetailsDto {
 
-@Entity
-@Table(
-        name = "t_manager",
-        schema="facility_workorder"
-)
-public class Manager {
-
-    @Id
-    @Column(name="manager_id")
     private String managerId;
-
-    @Column
     private String role;
-
-    @Column(name="primary_block")
     private String primaryBlock;
 
-    public String getManagerId() {
+
+    public ManagerDetailsDto(String managerId, String role, String primaryBlock) {
+        this.managerId = managerId;
+        this.role = role;
+        this.primaryBlock = primaryBlock;
+    }
+
+    public ManagerDetailsDto() {
+
+    }
+
+    public String  getManagerId() {
         return managerId;
     }
 

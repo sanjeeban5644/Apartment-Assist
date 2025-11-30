@@ -23,7 +23,7 @@ public class ManagerController {
     }
 
     @PostMapping(path="/createManager")
-    public ResponseEntity<ManagerDetailsDto> createManager(ManagerCreationDtoRequest request){
+    public ResponseEntity<ManagerDetailsDto> createManager(@RequestBody ManagerCreationDtoRequest request){
 
         ManagerDetailsDto response = new ManagerDetailsDto();
         response = managerService.createNewManager(request);

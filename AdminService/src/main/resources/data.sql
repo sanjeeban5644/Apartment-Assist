@@ -23,19 +23,19 @@ VALUES ('3', '2', '203', 'Arjun', 'Mukherjee', '6', 'res','49449kdflv');
 
 -- Insert Technicians into facility_workorder.t_technician
 INSERT INTO facility_workorder.t_technician (technician_id, first_name, last_name, total_completed_tasks, role)
-VALUES (201, 'Sandeep', 'Kumar', 45, 'tech');
+VALUES ('TECH0001', 'Sandeep', 'Kumar', 45, 'tech');
 
 INSERT INTO facility_workorder.t_technician (technician_id, first_name, last_name, total_completed_tasks, role)
-VALUES (202, 'Kiran', 'Patel', 30, 'tech');
+VALUES ('TECH0002', 'Kiran', 'Patel', 30, 'tech');
 
 INSERT INTO facility_workorder.t_technician (technician_id, first_name, last_name, total_completed_tasks, role)
-VALUES (203, 'Vikram', 'Singh', 55, 'tech');
+VALUES ('TECH0003', 'Vikram', 'Singh', 55, 'tech');
 
 INSERT INTO facility_workorder.t_technician (technician_id, first_name, last_name, total_completed_tasks, role)
-VALUES (204, 'Ravi', 'Mehta', 20, 'tech');
+VALUES ('TECH0004', 'Ravi', 'Mehta', 20, 'tech');
 
 INSERT INTO facility_workorder.t_technician (technician_id, first_name, last_name, total_completed_tasks, role)
-VALUES (205, 'Anil', 'Roy', 40, 'tech');
+VALUES ('TECH0005', 'Anil', 'Roy', 40, 'tech');
 
 
 

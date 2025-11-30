@@ -1,7 +1,7 @@
 package com.sanjeeban.AdminService.controller;
 
 
-import com.sanjeeban.AdminService.service.PdfService;
+import com.sanjeeban.AdminService.service.DocumentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,10 +22,10 @@ import java.io.ByteArrayInputStream;
 @RequestMapping("/pdf")
 public class PdfController {
 
-    private PdfService pdfService;
+    private DocumentService pdfService;
 
     @Autowired
-    public PdfController(PdfService pdfService){
+    public PdfController(DocumentService pdfService){
         this.pdfService = pdfService;
     }
 

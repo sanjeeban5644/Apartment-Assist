@@ -1,38 +1,27 @@
-package com.sanjeeban.AdminService.entity;
+package com.sanjeeban.AdminService.dto;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class TechnicianDetailsDto {
 
-@Entity
-@Table(
-        name = "t_technician",
-        schema="facility_workorder"
-)
-public class Technician {
-
-    @Id
-    @Column(name="technician_id",nullable = false)
     private String technicianId;
-
-    @Column(name="first_name")
     private String firstName;
-
-    @Column(name="last_name")
     private String lastName;
-
-    @Column(name="total_completed_tasks",nullable = true)
     private Integer totalCompletedTasks;
-
-    @Column(name="role")
     private String role;
 
+    private String  assignedBlock;
 
-    @Column(name="assigned_block")
-    private String assignedBlock = "unassigned";
+    public TechnicianDetailsDto() {
+    }
 
+    public TechnicianDetailsDto(String technicianId, String firstName, String lastName, Integer totalCompletedTasks, String role, String assignedBlock) {
+        this.technicianId = technicianId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.totalCompletedTasks = totalCompletedTasks;
+        this.role = role;
+        this.assignedBlock = assignedBlock;
+    }
 
     public String getAssignedBlock() {
         return assignedBlock;

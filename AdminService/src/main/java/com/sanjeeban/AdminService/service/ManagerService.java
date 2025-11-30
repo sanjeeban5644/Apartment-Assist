@@ -52,14 +52,14 @@ public class ManagerService {
         return modelMapper.map(newManager, ManagerDetailsDto.class);
     }
 
-    private String generateNewManagerId() {
+    public  String generateNewManagerId() {
 
         SecureRandom secureRandom = new SecureRandom();
-        Long secureIdLong = 10000000 + secureRandom.nextLong(90000000);
+        Long secureIdLong = 1000 + secureRandom.nextLong(9000);
         return String.valueOf(secureIdLong);
     }
 
-    private String getCurrYear(){
+    public String getCurrYear(){
         LocalDateTime currDataTime = LocalDateTime.now();
         int currYear = currDataTime.getYear();
         return String.valueOf(currYear);

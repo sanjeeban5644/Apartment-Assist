@@ -7,16 +7,17 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.sanjeeban.AdminService.customException.ResidentNotFound;
 import com.sanjeeban.AdminService.dto.ResidentDetailsDto;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 @Service
-public class PdfService {
+public class DocumentService {
 
     private ResidentService residentService;
 
-    public PdfService(ResidentService residentService){
+    public DocumentService(ResidentService residentService){
         this.residentService = residentService;
     }
 
@@ -100,6 +101,21 @@ public class PdfService {
         return new ByteArrayInputStream(outputStream.toByteArray());
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -6,18 +6,20 @@ import com.sanjeeban.AdminService.dto.ResidentCreationUpdationRequest;
 import com.sanjeeban.AdminService.dto.ResidentDetailsDto;
 import com.sanjeeban.AdminService.entity.Resident;
 import com.sanjeeban.AdminService.entity.ResidentKey;
+import com.sanjeeban.AdminService.helper.ExcelHelper;
 import com.sanjeeban.AdminService.repository.ResidentRepository;
+import org.hibernate.id.uuid.Helper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ResidentService {
@@ -100,10 +102,12 @@ public class ResidentService {
         String blockNo = request.getBlockNumber();
         String floorNo = request.getFloorNumber();
         String apartmentNo = request.getApartmentNumber();
-        LocalDateTime ldt = LocalDateTime.now();
-        LocalDate currDate = ldt.toLocalDate();
-        String formattedDate = currDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
-        String uniqueId = formattedDate+blockNo+floorNo+apartmentNo;
+//        LocalDateTime ldt = LocalDateTime.now();
+//        LocalDate currDate = ldt.toLocalDate();
+//        String formattedDate = currDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+//        String uniqueId = formattedDate+blockNo+floorNo+apartmentNo;
+
+        String uniqueId = generateNewUniqueIdForResident(blockNo,floorNo,apartmentNo);
         newResident.setResidentUniqueId(uniqueId);
 
         ResidentKey residentKey = new ResidentKey();
@@ -119,6 +123,23 @@ public class ResidentService {
 
 
 
+    public String generateNewUniqueIdForResident(String blockNo,String floorNo,String apartmentNo){
+        while(true){
+            String uniqueId = buildUniqueId(blockNo,floorNo,apartmentNo);
+            boolean conflict = residentRepository.findByresidentUniqueId(uniqueId).isPresent();
+            if(!conflict){
+                return uniqueId;
+            }
+        }
+    }
+
+
+    private String buildUniqueId(String blockNo, String floorNo, String apartmentNo) {
+        String formattedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+        return formattedDate + blockNo + floorNo + apartmentNo;
+    }
+
+
     public ResidentDetailsDto getResidentDetails(String residentUniqueId) {
         ResidentDetailsDto response = new ResidentDetailsDto();
         Resident resident = new Resident();
@@ -130,5 +151,22 @@ public class ResidentService {
         response.setFloorNumber(resident.getResidentId().getFloorNumber());
         response.setApartmentNumber(resident.getResidentId().getApartmentNumber());
         return response;
+    }
+
+    public void saveExcelData(MultipartFile file){
+
+        try{
+            List<Resident> listOfResidentsFromExcelSheet = ExcelHelper.convertExcelToListOfResidents(file.getInputStream());
+            this.residentRepository.saveAll(listOfResidentsFromExcelSheet);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public List<Resident> getAllResidents() {
+        List<Resident> listOfAllResidents = new ArrayList<>();
+        listOfAllResidents = residentRepository.findAll();
+        return listOfAllResidents;
     }
 }

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resident Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Resident Portal</h2>
+                <p id="userInfo"></p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <span>🏠</span> Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="lodge-complaint">
+                    <span>➕</span> Lodge Complaint
+                </a>
+                <a href="#" class="nav-item" data-section="my-complaints">
+                    <span>📋</span> My Complaints
+                </a>
+                <a href="#" class="nav-item" data-section="history">
+                    <span>📜</span> History
+                </a>
+                <a href="#" class="nav-item" data-section="profile">
+                    <span>👤</span> My Profile
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-logout">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1 id="sectionTitle">Dashboard</h1>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Active Complaints</h3>
+                        <p class="stat-number" id="activeComplaints">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending Resolution</h3>
+                        <p class="stat-number" id="pendingComplaints">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Resolved</h3>
+                        <p class="stat-number" id="resolvedComplaints">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Complaints</h3>
+                        <p class="stat-number" id="totalComplaints">0</p>
+                    </div>
+                </div>
+
+                <div class="recent-complaints">
+                    <h3>Recent Complaints</h3>
+                    <div id="recentComplaintsList" class="data-list"></div>
+                </div>
+            </section>
+
+            <!-- Lodge Complaint Section -->
+            <section id="lodge-complaint" class="content-section">
+                <div class="form-container">
+                    <form id="complaintForm">
+                        <div class="form-group">
+                            <label>Complaint Type</label>
+                            <select id="complaintType" required>
+                                <option value="">Select Type</option>
+                                <option value="PLUMBING">Plumbing</option>
+                                <option value="ELECTRICAL">Electrical</option>
+                                <option value="AC">Air Conditioning</option>
+                                <option value="CARPENTRY">Carpentry</option>
+                                <option value="PAINTING">Painting</option>
+                                <option value="CLEANING">Cleaning</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="complaintSubject" placeholder="Brief description of the issue" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="complaintDescription" placeholder="Detailed description of the problem" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <select id="complaintPriority" required>
+                                <option value="LOW">Low</option>
+                                <option value="MEDIUM" selected>Medium</option>
+                                <option value="HIGH">High</option>
+                                <option value="URGENT">Urgent</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" id="complaintLocation" placeholder="e.g., Kitchen, Bedroom, Bathroom" required>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Submit Complaint</button>
+                    </form>
+
+                    <div id="complaintStatus" class="status-message"></div>
+                </div>
+            </section>
+
+            <!-- My Complaints Section -->
+            <section id="my-complaints" class="content-section">
+                <div class="filters">
+                    <select id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="JOB_COMPLETED">Job Completed</option>
+                        <option value="RESOLVED">Resolved</option>
+                    </select>
+                </div>
+
+                <div id="myComplaintsList" class="data-list"></div>
+
+                <!-- Complaint Detail Modal -->
+                <div id="complaintDetailModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Complaint Details</h2>
+                        <div id="complaintDetailContent"></div>
+                        <div id="complaintActions" style="margin-top: 20px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section id="history" class="content-section">
+                <h3>Complaint History</h3>
+                <div id="historyList" class="data-list"></div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <div class="profile-container">
+                    <h3>My Profile</h3>
+                    <div id="profileDetails" class="profile-details"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="scripts/resident.js"></script>
+</body>
+</html>

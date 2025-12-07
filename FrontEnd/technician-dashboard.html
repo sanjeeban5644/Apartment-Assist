@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Technician Portal</h2>
+                <p id="userInfo"></p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="pending-jobs">
+                    <span>⏳</span> Pending Jobs
+                </a>
+                <a href="#" class="nav-item" data-section="my-jobs">
+                    <span>🔧</span> My Jobs
+                </a>
+                <a href="#" class="nav-item" data-section="completed">
+                    <span>✅</span> Completed Jobs
+                </a>
+                <a href="#" class="nav-item" data-section="profile">
+                    <span>👤</span> My Profile
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-logout">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1 id="sectionTitle">Dashboard</h1>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Pending Requests</h3>
+                        <p class="stat-number" id="pendingJobs">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Jobs</h3>
+                        <p class="stat-number" id="activeJobs">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Completed Today</h3>
+                        <p class="stat-number" id="completedToday">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Completed</h3>
+                        <p class="stat-number" id="totalCompleted">0</p>
+                    </div>
+                </div>
+
+                <div class="recent-jobs">
+                    <h3>Recent Assignments</h3>
+                    <div id="recentJobsList" class="data-list"></div>
+                </div>
+            </section>
+
+            <!-- Pending Jobs Section -->
+            <section id="pending-jobs" class="content-section">
+                <h3>New Job Requests</h3>
+                <div id="pendingJobsList" class="data-list"></div>
+            </section>
+
+            <!-- My Jobs Section -->
+            <section id="my-jobs" class="content-section">
+                <div class="filters">
+                    <select id="jobStatusFilter">
+                        <option value="">All Active Jobs</option>
+                        <option value="ACCEPTED">Accepted</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                    </select>
+                </div>
+
+                <div id="myJobsList" class="data-list"></div>
+
+                <!-- Job Detail Modal -->
+                <div id="jobDetailModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Job Details</h2>
+                        <div id="jobDetailContent"></div>
+                        <div id="jobActions" style="margin-top: 20px;"></div>
+                    </div>
+                </div>
+
+                <!-- Update Status Modal -->
+                <div id="updateStatusModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Update Job Status</h2>
+                        <form id="updateStatusForm">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select id="jobStatus" required>
+                                    <option value="IN_PROGRESS">In Progress</option>
+                                    <option value="COMPLETED">Completed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Update Notes</label>
+                                <textarea id="statusNotes" placeholder="Add any notes about the work done..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">Update Status</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Completed Jobs Section -->
+            <section id="completed" class="content-section">
+                <div class="filters">
+                    <select id="completedFilter">
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="all">All Time</option>
+                    </select>
+                </div>
+
+                <div id="completedJobsList" class="data-list"></div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <div class="profile-container">
+                    <h3>My Profile</h3>
+                    <div id="profileDetails" class="profile-details"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="scripts/technician.js"></script>
+</body>
+</html>

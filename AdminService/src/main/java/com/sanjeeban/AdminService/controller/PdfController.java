@@ -21,9 +21,7 @@ import java.io.ByteArrayInputStream;
 @RestController
 @RequestMapping("/pdf")
 public class PdfController {
-
     private DocumentService pdfService;
-
     @Autowired
     public PdfController(DocumentService pdfService){
         this.pdfService = pdfService;
@@ -44,9 +42,5 @@ public class PdfController {
                 .headers(httpHeaders)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(pdf));
-
-
     }
-
-
 }

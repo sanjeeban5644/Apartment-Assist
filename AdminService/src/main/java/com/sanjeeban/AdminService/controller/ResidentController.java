@@ -20,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "*")
 public class ResidentController {
 
     private ResidentService residentService;

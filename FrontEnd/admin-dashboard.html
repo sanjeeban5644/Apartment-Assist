@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+                <p id="userInfo"></p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <span>📊</span> Overview
+                </a>
+                <a href="#" class="nav-item" data-section="managers">
+                    <span>👥</span> Managers
+                </a>
+                <a href="#" class="nav-item" data-section="residents">
+                    <span>🏠</span> Residents
+                </a>
+                <a href="#" class="nav-item" data-section="technicians">
+                    <span>🔧</span> Technicians
+                </a>
+                <a href="#" class="nav-item" data-section="complaints">
+                    <span>📋</span> Complaints
+                </a>
+                <a href="#" class="nav-item" data-section="upload">
+                    <span>📤</span> Upload Data
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-logout">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1 id="sectionTitle">Overview</h1>
+            </header>
+
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Residents</h3>
+                        <p class="stat-number" id="totalResidents">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Technicians</h3>
+                        <p class="stat-number" id="totalTechnicians">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Complaints</h3>
+                        <p class="stat-number" id="activeComplaints">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Managers</h3>
+                        <p class="stat-number" id="totalManagers">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Managers Section -->
+            <section id="managers" class="content-section">
+                <button class="btn-primary" id="addManagerBtn">+ Add Manager</button>
+                
+                <div id="managersList" class="data-list"></div>
+
+                <!-- Add Manager Modal -->
+                <div id="managerModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Create Manager</h2>
+                        <form id="managerForm">
+                            <div class="form-group">
+                                <label>Manager Type</label>
+                                <select id="managerType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="GM">General Manager</option>
+                                    <option value="BM">Block Manager</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="managerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="managerEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="managerPhone" required>
+                            </div>
+                            <div id="blockFieldGroup" class="form-group" style="display:none;">
+                                <label>Block Number</label>
+                                <input type="text" id="blockNumber">
+                            </div>
+                            <button type="submit" class="btn-primary">Create Manager</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Residents Section -->
+            <section id="residents" class="content-section">
+                <div class="section-header">
+                    <button class="btn-primary" id="addResidentBtn">+ Add Resident</button>
+                    
+                    <div class="search-container">
+                        <input type="text" id="searchResident" placeholder="Search by name, ID, email, phone, block or flat..." onkeypress="if(event.key==='Enter') searchResidents()">
+                        <button class="btn-primary" id="searchBtn">Search</button>
+                        <button class="btn-secondary" id="viewAllResidents">View All</button>
+                    </div>
+                </div>
+                
+                <div id="searchResults" class="search-result-info" style="display: none;"></div>
+                <div id="residentsList" class="data-list"></div>
+
+                <!-- Add Resident Modal -->
+                <div id="residentModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Create/Update Resident</h2>
+                        <form id="residentForm">
+                            <div class="form-group">
+                                <label>Unique ID</label>
+                                <input type="text" id="residentUniqueId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="residentName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="residentEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="residentPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Block</label>
+                                <input type="text" id="residentBlock" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Flat Number</label>
+                                <input type="text" id="residentFlat" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Save Resident</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technicians Section -->
+            <section id="technicians" class="content-section">
+                <button class="btn-primary" id="addTechnicianBtn">+ Add Technician</button>
+                
+                <div id="techniciansList" class="data-list"></div>
+
+                <!-- Add Technician Modal -->
+                <div id="technicianModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Create Technician</h2>
+                        <form id="technicianForm">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="technicianName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="technicianEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="technicianPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Specialization</label>
+                                <input type="text" id="technicianSpecialization" placeholder="e.g., Plumbing, Electrical" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Assigned Block</label>
+                                <input type="text" id="technicianBlock">
+                            </div>
+                            <button type="submit" class="btn-primary">Create Technician</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Complaints Section -->
+            <section id="complaints" class="content-section">
+                <div class="filters">
+                    <select id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="PENDING_BM">Pending with BM</option>
+                        <option value="PENDING_GM">Pending with GM</option>
+                        <option value="PENDING_BM_TECHNICIAN">Pending with BM/Technician</option>
+                        <option value="PENDING_GM_TECHNICIAN">Pending with GM/Technician</option>
+                        <option value="JC_TECHNICIAN">Job Completed/Technician</option>
+                        <option value="JC_RESIDENT">Job Completed/Resident</option>
+                        <option value="JC_GM">Job Completed/GM</option>
+                        <option value="JC_BM">Job Completed/BM</option>
+                        <option value="RESOLVED">Resolved</option>
+                    </select>
+                </div>
+                
+                <div id="complaintsList" class="data-list"></div>
+            </section>
+
+            <!-- Upload Data Section -->
+            <section id="upload" class="content-section">
+                <div class="upload-container">
+                    <h3>Upload Resident Data (Excel)</h3>
+                    <form id="uploadForm">
+                        <div class="file-upload">
+                            <input type="file" id="excelFile" accept=".xlsx,.xls" required>
+                            <label for="excelFile">Choose Excel File</label>
+                            <span id="fileName">No file chosen</span>
+                        </div>
+                        <button type="submit" class="btn-primary">Upload</button>
+                    </form>
+                    <div id="uploadStatus" class="status-message"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="scripts/admin.js"></script>
+</body>
+</html>

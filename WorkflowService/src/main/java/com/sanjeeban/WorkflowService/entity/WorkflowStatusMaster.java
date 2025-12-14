@@ -3,7 +3,6 @@ package com.sanjeeban.WorkflowService.entity;
 
 import com.sanjeeban.WorkflowService.enums.WorkflowStatusLegend;
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Entity
 @Table(

@@ -1,9 +1,11 @@
 package com.sanjeeban.ResidentService.service;
 
 
+import com.sanjeeban.ResidentService.dto.LodgeComplaintDto;
 import com.sanjeeban.ResidentService.dto.ResidentDetailsDto;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -38,5 +40,28 @@ public class ResidentRequestService {
         }
 
         return response;
+    }
+
+    public String postComplaint(LodgeComplaintDto request) {
+
+        String response = null;
+
+
+        ServiceInstance adminService = discoveryClient.getInstances("WorkflowService").get(0);
+        URI uri = URI.create(adminService.getUri().toString()+"/workflow/initiateWorkflow");
+        System.out.println("Workflow -> Workflow url +is : "+uri);
+        try{
+            response = restClient.post()
+                    .uri(uri)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(request)
+                    .retrieve()
+                    .body(String.class);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
+
     }
 }

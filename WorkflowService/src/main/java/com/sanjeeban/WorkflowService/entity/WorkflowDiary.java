@@ -2,10 +2,7 @@ package com.sanjeeban.WorkflowService.entity;
 
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +13,11 @@ import java.time.LocalDateTime;
 )
 public class WorkflowDiary {
 
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name="workflow_status_id")
     private Long workflowStatusId;
 
@@ -34,6 +35,10 @@ public class WorkflowDiary {
 
     @Column(name="remarks")
     private String remarks;
+
+
+    public WorkflowDiary() {
+    }
 
     public WorkflowDiary(Long workflowStatusId, String status, String subStatus, String updatedBy, LocalDateTime updatedAt, String remarks) {
         this.workflowStatusId = workflowStatusId;

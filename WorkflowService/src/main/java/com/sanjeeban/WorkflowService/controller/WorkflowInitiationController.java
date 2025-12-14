@@ -1,35 +1,42 @@
 package com.sanjeeban.WorkflowService.controller;
 
 
-import com.sanjeeban.WorkflowService.dto.InitiateWorkflowDetailsDto;
+import com.sanjeeban.WorkflowService.dto.WorkflowRequestDto;
+import com.sanjeeban.WorkflowService.service.WorkflowProcess;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
 
 @RequestMapping("/workflow")
 @RestController
 public class WorkflowInitiationController {
 
+    private WorkflowProcess workflowProcess;
 
-    @Operation(summary = "Initiate Workflow Process",description = "Initiate the workflow process for the complaint")
+
+
+    @Autowired
+    public WorkflowInitiationController(WorkflowProcess workflowProcess){
+        this.workflowProcess = workflowProcess;
+    }
+
+
+    @Operation(summary = "Initiate Workflow Process",description = "Initiate the workflow process for the complaint id")
     @PostMapping(path="/initiateWorkflow")
-    public ResponseEntity<String> initiateWorkflow(InitiateWorkflowDetailsDto request){
-        String response = null;
+    public ResponseEntity<String> initiateWorkflow(WorkflowRequestDto request){
+        String response = "";
+
+        response = workflowProcess.triggerWorkflow(request);
+
+        //response.append(request.getComplaintId().toString());
 
 
 
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(String.valueOf(response));
     }
 
 

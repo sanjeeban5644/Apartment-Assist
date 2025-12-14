@@ -1,15 +1,13 @@
 package com.sanjeeban.ResidentService.controller;
 
 
+import com.sanjeeban.ResidentService.dto.LodgeComplaintDto;
 import com.sanjeeban.ResidentService.dto.ResidentDetailsDto;
 import com.sanjeeban.ResidentService.service.ResidentRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
 
 import java.net.URI;
@@ -35,10 +33,24 @@ public class ResidentRequestController {
 
         response = residentRequestService.getResidentDetails(uniqueId);
 
-
-
         return response;
     }
+
+
+    @PostMapping(path="/lodgeComplaint")
+    public String lodgeComplaint(@RequestBody LodgeComplaintDto request){
+
+        String response = residentRequestService.postComplaint(request);
+
+
+
+
+
+        return null;
+
+    }
+
+
 
 
 

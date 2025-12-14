@@ -3,24 +3,27 @@ package com.sanjeeban.WorkflowService.enums;
 public enum WorkflowStatusLegend {
 
 
-        PENDING_WITH_BM("PENDING_WITH_BM"),
-        PENDING_WITH_GM("PENDING_WITH_GM"),
-        PENDING_WITH_GM_TECHNICIAN("PENDING_WITH_GM_TECHNICIAN"),
-        PENDING_WITH_BM_TECHNICIAN("PENDING_WITH_BM_TECHNICIAN"),
-        JOB_COMPLETED_TECHNICIAN("JOB_COMPLETED_TECHNICIAN"),
-        JOB_COMPLETED_RESIDENT("JOB_COMPLETED_RESIDENT"),
-        JOB_CLOSURE_GM("JOB_CLOSURE_GM"),
-        JOB_CLOSURE_BM("JOB_CLOSURE_BM");
+
+        PENDING_WITH_BM("PBM"),
+        PENDING_WITH_GM("PGM"),
+        PENDING_WITH_GM_TECHNICIAN("PGMT"),
+        PENDING_WITH_BM_TECHNICIAN("PBMT"),
+        JOB_COMPLETED_TECHNICIAN("JCT"),
+        JOB_COMPLETED_RESIDENT("JCR"),
+        JOB_CLOSURE_GM("JCGM"),
+        JOB_CLOSURE_BM("JCBM"),
+        INVALID_REQUEST("IR");
 
         private final String code;
 
-    WorkflowStatusLegend(String code) {
+        WorkflowStatusLegend(String code) {
             this.code = code;
         }
 
-    public String getCode() {
+        public String getCode() {
             return code;
         }
+
 
 
 }

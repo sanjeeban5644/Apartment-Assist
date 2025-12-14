@@ -12,14 +12,17 @@ import java.time.LocalDateTime;
 public class WorkflowStatus {
 
     @Id
-    @Column(name="workflow_status_id")
-    private Long workflowStatusId;
-
     @Column(name = "complaint_id", nullable = false)
     private Long complaintId;
 
+    @Column(name="workflow_status_id")
+    private Long workflowStatusId;
+
     @Column(name="current_status",nullable = false)
     private String currentStatus;
+
+    @Column(name="sub_status",nullable = true)
+    private String substatus;
 
     @Column(name = "updated_by", nullable = false)
     private String updatedBy;
@@ -31,10 +34,14 @@ public class WorkflowStatus {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
 
-    public WorkflowStatus(Long workflowStatusId, Long complaintId, String currentStatus, String updatedBy, String remarks, LocalDateTime updatedAt) {
-        this.workflowStatusId = workflowStatusId;
+    public WorkflowStatus() {
+    }
+
+    public WorkflowStatus(Long complaintId, Long workflowStatusId, String currentStatus, String substatus, String updatedBy, String remarks, LocalDateTime updatedAt) {
         this.complaintId = complaintId;
+        this.workflowStatusId = workflowStatusId;
         this.currentStatus = currentStatus;
+        this.substatus = substatus;
         this.updatedBy = updatedBy;
         this.remarks = remarks;
         this.updatedAt = updatedAt;
@@ -86,5 +93,13 @@ public class WorkflowStatus {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getSubstatus() {
+        return substatus;
+    }
+
+    public void setSubstatus(String substatus) {
+        this.substatus = substatus;
     }
 }

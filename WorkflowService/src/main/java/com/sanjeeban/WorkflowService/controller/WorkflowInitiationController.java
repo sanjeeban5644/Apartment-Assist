@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,7 @@ public class WorkflowInitiationController {
 
     @Operation(summary = "Initiate Workflow Process",description = "Initiate the workflow process for the complaint id")
     @PostMapping(path="/initiateWorkflow")
-    public ResponseEntity<String> initiateWorkflow(WorkflowRequestDto request){
+    public ResponseEntity<String> initiateWorkflow(@RequestBody WorkflowRequestDto request){
         String response = "";
 
         response = workflowProcess.triggerWorkflow(request);

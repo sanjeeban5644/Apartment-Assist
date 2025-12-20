@@ -1,13 +1,16 @@
 package com.sanjeeban.WorkflowService.service;
 
+import com.sanjeeban.WorkflowService.customException.DuplicateWorkflowException;
 import com.sanjeeban.WorkflowService.dal.WorkflowAccessLayer;
 import com.sanjeeban.WorkflowService.dto.WorkflowRequestDto;
 
 import com.sanjeeban.WorkflowService.entity.WorkflowDiary;
 import com.sanjeeban.WorkflowService.entity.WorkflowSequence;
 import com.sanjeeban.WorkflowService.entity.WorkflowStatus;
+import com.sanjeeban.WorkflowService.entity.WorkflowStatusMaster;
 import com.sanjeeban.WorkflowService.repository.WorkflowDiaryRepository;
 import com.sanjeeban.WorkflowService.repository.WorkflowSequenceRepository;
+import com.sanjeeban.WorkflowService.repository.WorkflowStatusMasterRepository;
 import com.sanjeeban.WorkflowService.repository.WorkflowStatusRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,35 +33,35 @@ public class WorkflowProcess {
 
     private WorkflowStatusRepository workflowStatusRepository;
 
+    private WorkflowStatusMasterRepository workflowStatusMasterRepository;
+
 
 
     @Autowired
-    public WorkflowProcess(WorkflowValidations workflowValidations,WorkflowSequenceRepository workflowSequenceRepository,WorkflowAccessLayer workflowAccessLayer,WorkflowDiaryRepository workflowDiaryRepository,WorkflowStatusRepository workflowStatusRepository){
+    public WorkflowProcess(WorkflowValidations workflowValidations,WorkflowSequenceRepository workflowSequenceRepository,WorkflowAccessLayer workflowAccessLayer,WorkflowDiaryRepository workflowDiaryRepository,WorkflowStatusRepository workflowStatusRepository,WorkflowStatusMasterRepository workflowStatusMasterRepository){
         this.workflowValidations = workflowValidations;
         this.workflowSequenceRepository = workflowSequenceRepository;
         this.workflowAccessLayer = workflowAccessLayer;
         this.workflowDiaryRepository = workflowDiaryRepository;
         this.workflowStatusRepository = workflowStatusRepository;
+        this.workflowStatusMasterRepository = workflowStatusMasterRepository;
     }
 
 
     public String triggerWorkflow(WorkflowRequestDto request) {
 
-
+        // generating a unique workflow id
         Long workflowId = Long.valueOf(workflowAccessLayer.generateWorkflowId());
-
+        request.setComplaintId(202501l);
 
         JSONObject json = new JSONObject();
         String response = "";
         String usercode = request.getUserCode();
         String requestType = request.getRequestType();
 
-
-
-
-
-        // validating that the user requests the correct request.
+        // validating that the user requests the correct request-type.
         boolean isValidRequestType = workflowValidations.validateUserWithRequestType(usercode,requestType);
+        //boolean isValidUser = workflowValidations.checkValidUser(usercode)
 
         if(!isValidRequestType){
 
@@ -69,18 +72,9 @@ public class WorkflowProcess {
             json.put("responseMsg","Invalid user and reqeust Mapping");
             json.put("currStatus","ip");
             return json.toString();
+        }else{
+
         }
-
-        boolean isValidRequest = workflowValidations.checkRequestValidity();
-
-
-
-
-
-
-
-
-
         return "--in progress--";
     }
 
@@ -96,7 +90,7 @@ public class WorkflowProcess {
             WorkflowDiary wfkDiary = new WorkflowDiary();
             wfkDiary.setWorkflowStatusId(workflowId);
             wfkDiary.setStatus(status);
-            wfkDiary.setSubStatus(null);
+            wfkDiary.setSubStatus(String.valueOf(workflowStatusMasterRepository.findStatusCodeFromStatus(status).orElse(250)));
             wfkDiary.setUpdatedAt(LocalDateTime.now());
             wfkDiary.setUpdatedBy(userCode);
             wfkDiary.setRemarks("first entry");
@@ -104,18 +98,19 @@ public class WorkflowProcess {
 
             //saving in workflow status
 
-            // since this is the first time we are just saving.
-
             WorkflowStatus wfkStatus = new WorkflowStatus();
             wfkStatus.setComplaintId(complaintId);
             wfkStatus.setWorkflowStatusId(workflowId);
             wfkStatus.setCurrentStatus(status);
-            wfkStatus.setSubstatus(null);
+            wfkStatus.setSubstatus(String.valueOf(workflowStatusMasterRepository.findStatusCodeFromStatus(status).orElse(250)));
             wfkStatus.setUpdatedAt(LocalDateTime.now());
             wfkStatus.setUpdatedBy(userCode);
 
             workflowStatusRepository.save(wfkStatus);
+        }else{
+            throw  new DuplicateWorkflowException("Workflow Id : "+workflowId);
         }
+
         return status;
     }
 

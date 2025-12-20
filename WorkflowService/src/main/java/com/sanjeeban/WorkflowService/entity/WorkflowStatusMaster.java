@@ -64,4 +64,6 @@ public class WorkflowStatusMaster {
     public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
     }
+
+
 }

@@ -23,7 +23,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class ResidentController {
 
-    private ResidentService residentService;
+    private final ResidentService residentService;
 
     @Autowired
     public ResidentController(ResidentService residentService){
@@ -32,7 +32,7 @@ public class ResidentController {
 
 
     @PostMapping(path="/createOrUpdateResident")
-    private ResponseEntity<ResidentDetailsDto> createOrUpdateResident(@RequestBody ResidentCreationUpdationRequest request){
+    public ResponseEntity<ResidentDetailsDto> createOrUpdateResident(@RequestBody ResidentCreationUpdationRequest request){
 
         ResidentDetailsDto response = new ResidentDetailsDto();
 
@@ -44,7 +44,7 @@ public class ResidentController {
 
 
     @GetMapping(path="/getResidentDetailsByUniqueId")
-    private ResponseEntity<ResidentDetailsDto> getResidentDetails(@RequestParam(name="ResidentUniqueId")String residentUniqueId){
+    public ResponseEntity<ResidentDetailsDto> getResidentDetails(@RequestParam(name="ResidentUniqueId")String residentUniqueId){
         ResidentDetailsDto response = new ResidentDetailsDto();
         response = residentService.getResidentDetails(residentUniqueId);
         return ResponseEntity.ok(response);
@@ -52,7 +52,7 @@ public class ResidentController {
 
 
     @GetMapping(path="/getAllResidents")
-    private ResponseEntity<List<Resident>> getAllResidentDetails(){
+    public ResponseEntity<List<Resident>> getAllResidentDetails(){
         List<Resident> listOfResidents = new ArrayList<>();
 
         listOfResidents = residentService.getAllResidents();

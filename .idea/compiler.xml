@@ -11,10 +11,12 @@
         <module name="AdminService" />
         <module name="DiscoveryService" />
         <module name="WorkflowService" />
+        <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AdminService" target="19" />
+      <module name="ApiGateway" target="19" />
       <module name="DiscoveryService" target="19" />
       <module name="ResidentService" target="19" />
       <module name="TechnicianService" target="19" />
@@ -24,6 +26,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AdminService" options="-parameters" />
+      <module name="ApiGateway" options="-parameters" />
       <module name="DiscoveryService" options="-parameters" />
       <module name="ResidentService" options="-parameters" />
       <module name="TechnicianService" options="-parameters" />

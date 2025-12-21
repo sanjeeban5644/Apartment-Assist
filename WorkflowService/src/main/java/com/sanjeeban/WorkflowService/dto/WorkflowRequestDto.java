@@ -9,14 +9,17 @@ public class WorkflowRequestDto {
     private String requestType;
     private String remarks;
 
+    private String residentUniqueId;
+
     public WorkflowRequestDto() {
     }
 
-    public WorkflowRequestDto(Long complaintId, String userCode, String requestType, String remarks) {
+    public WorkflowRequestDto(Long complaintId, String userCode, String requestType, String remarks,String residentUniqueId) {
         this.complaintId = complaintId;
         this.userCode = userCode;
         this.requestType = requestType;
         this.remarks = remarks;
+        this.residentUniqueId = residentUniqueId;
     }
 
     public Long getComplaintId() {
@@ -49,5 +52,13 @@ public class WorkflowRequestDto {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getResidentUniqueId() {
+        return residentUniqueId;
+    }
+
+    public void setResidentUniqueId(String residentUniqueId) {
+        this.residentUniqueId = residentUniqueId;
     }
 }

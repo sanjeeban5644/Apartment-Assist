@@ -4,14 +4,8 @@ import com.sanjeeban.WorkflowService.customException.DuplicateWorkflowException;
 import com.sanjeeban.WorkflowService.dal.WorkflowAccessLayer;
 import com.sanjeeban.WorkflowService.dto.WorkflowRequestDto;
 
-import com.sanjeeban.WorkflowService.entity.WorkflowDiary;
-import com.sanjeeban.WorkflowService.entity.WorkflowSequence;
-import com.sanjeeban.WorkflowService.entity.WorkflowStatus;
-import com.sanjeeban.WorkflowService.entity.WorkflowStatusMaster;
-import com.sanjeeban.WorkflowService.repository.WorkflowDiaryRepository;
-import com.sanjeeban.WorkflowService.repository.WorkflowSequenceRepository;
-import com.sanjeeban.WorkflowService.repository.WorkflowStatusMasterRepository;
-import com.sanjeeban.WorkflowService.repository.WorkflowStatusRepository;
+import com.sanjeeban.WorkflowService.entity.*;
+import com.sanjeeban.WorkflowService.repository.*;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,16 +29,19 @@ public class WorkflowProcess {
 
     private WorkflowStatusMasterRepository workflowStatusMasterRepository;
 
+    private ResidentComplaintMappingRepository residentComplaintMappingRepository;
+
 
 
     @Autowired
-    public WorkflowProcess(WorkflowValidations workflowValidations,WorkflowSequenceRepository workflowSequenceRepository,WorkflowAccessLayer workflowAccessLayer,WorkflowDiaryRepository workflowDiaryRepository,WorkflowStatusRepository workflowStatusRepository,WorkflowStatusMasterRepository workflowStatusMasterRepository){
+    public WorkflowProcess(WorkflowValidations workflowValidations,WorkflowSequenceRepository workflowSequenceRepository,WorkflowAccessLayer workflowAccessLayer,WorkflowDiaryRepository workflowDiaryRepository,WorkflowStatusRepository workflowStatusRepository,WorkflowStatusMasterRepository workflowStatusMasterRepository,ResidentComplaintMappingRepository residentComplaintMappingRepository){
         this.workflowValidations = workflowValidations;
         this.workflowSequenceRepository = workflowSequenceRepository;
         this.workflowAccessLayer = workflowAccessLayer;
         this.workflowDiaryRepository = workflowDiaryRepository;
         this.workflowStatusRepository = workflowStatusRepository;
         this.workflowStatusMasterRepository = workflowStatusMasterRepository;
+        this.residentComplaintMappingRepository = residentComplaintMappingRepository;
     }
 
 
@@ -52,7 +49,14 @@ public class WorkflowProcess {
 
         // generating a unique workflow id
         Long workflowId = Long.valueOf(workflowAccessLayer.generateWorkflowId());
-        request.setComplaintId(202501l);
+
+        //saving the master table || resident -> complaint_id
+
+        ResidentComplaintMapping residentComplaintMappingObject = new ResidentComplaintMapping();
+        residentComplaintMappingObject.setComplaintId(request.getComplaintId());
+        residentComplaintMappingObject.setResidentUniqueId(request.getResidentUniqueId());
+        residentComplaintMappingRepository.save(residentComplaintMappingObject);
+
 
         JSONObject json = new JSONObject();
         String response = "";
@@ -73,6 +77,10 @@ public class WorkflowProcess {
             json.put("currStatus","ip");
             return json.toString();
         }else{
+            // everything is normal. going to next stage
+
+
+
 
         }
         return "--in progress--";

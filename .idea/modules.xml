@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AdminService/AdminService.iml" filepath="$PROJECT_DIR$/AdminService/AdminService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ApiGateway/ApiGateway.iml" filepath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/DiscoveryService/DiscoveryService.iml" filepath="$PROJECT_DIR$/DiscoveryService/DiscoveryService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Project8_FacilityWorkorderMaintainance.iml" filepath="$PROJECT_DIR$/.idea/Project8_FacilityWorkorderMaintainance.iml" />
       <module fileurl="file://$PROJECT_DIR$/ResidentService/ResidentService.iml" filepath="$PROJECT_DIR$/ResidentService/ResidentService.iml" />

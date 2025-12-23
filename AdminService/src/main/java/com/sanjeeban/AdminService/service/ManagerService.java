@@ -2,8 +2,10 @@ package com.sanjeeban.AdminService.service;
 
 
 import com.sanjeeban.AdminService.customException.ManagerInvalidException;
+import com.sanjeeban.AdminService.dataAccessLayer.ManagerProcess;
 import com.sanjeeban.AdminService.dto.ManagerCreationDtoRequest;
 import com.sanjeeban.AdminService.dto.ManagerDetailsDto;
+import com.sanjeeban.AdminService.dto.PendingApprovalsResponseDto;
 import com.sanjeeban.AdminService.entity.Manager;
 import com.sanjeeban.AdminService.repository.ManagerRepository;
 import org.modelmapper.ModelMapper;
@@ -22,11 +24,14 @@ public class ManagerService {
 
     private ModelMapper modelMapper;
 
+    private ManagerProcess managerProcess;
+
 
     @Autowired
-    public ManagerService(ManagerRepository managerRepository,ModelMapper modelMapper){
+    public ManagerService(ManagerRepository managerRepository,ModelMapper modelMapper,ManagerProcess managerProcess){
         this.managerRepository = managerRepository;
         this.modelMapper = modelMapper;
+        this.managerProcess = managerProcess;
     }
 
 
@@ -91,6 +96,12 @@ public class ManagerService {
             listOfManagers.add(currManager);
         }
         return listOfManagers;
+
+    }
+
+    public List<PendingApprovalsResponseDto> showPendingApprovals(String managerId) {
+
+            List<PendingApprovalsResponseDto> listOfApprovals = managerProcess.getListOfApprovals();
 
     }
 }

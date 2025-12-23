@@ -3,6 +3,7 @@ package com.sanjeeban.AdminService.controller;
 
 import com.sanjeeban.AdminService.dto.ManagerCreationDtoRequest;
 import com.sanjeeban.AdminService.dto.ManagerDetailsDto;
+import com.sanjeeban.AdminService.dto.PendingApprovalsResponseDto;
 import com.sanjeeban.AdminService.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,21 @@ public class ManagerController {
 
         return ResponseEntity.ok(detailList);
     }
+
+//    @PostMapping(path="/approveRejectWorkorder")
+//    public ResponseEntity<String> approveRejectAssignWorkorder(){
+//        return "";
+//    }
+
+    @GetMapping(path="/showPendingApprovals")
+    public ResponseEntity<List<PendingApprovalsResponseDto>> showAllPendingApprovals(@RequestParam(name="ManagerId",required = true) String managerId){
+        return ResponseEntity.ok(managerService.showPendingApprovals(managerId));
+    }
+
+
+
+
+
 
 
 

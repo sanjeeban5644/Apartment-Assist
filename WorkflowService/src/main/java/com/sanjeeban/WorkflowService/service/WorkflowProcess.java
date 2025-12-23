@@ -62,6 +62,7 @@ public class WorkflowProcess {
         String response = "";
         String usercode = request.getUserCode();
         String requestType = request.getRequestType();
+        String currStatus = "";
 
         // validating that the user requests the correct request-type.
         boolean isValidRequestType = workflowValidations.validateUserWithRequestType(usercode,requestType);
@@ -69,7 +70,7 @@ public class WorkflowProcess {
 
         if(!isValidRequestType){
 
-            String currStatus = saveStatus("IR",workflowId,request.getComplaintId(),request.getUserCode());
+            currStatus = saveStatus("IR",workflowId,request.getComplaintId(),request.getUserCode());
 
             json.put("complaintId",request.getComplaintId());
             json.put("responseCode","400");
@@ -78,12 +79,9 @@ public class WorkflowProcess {
             return json.toString();
         }else{
             // everything is normal. going to next stage
-
-
-
-
+            currStatus = saveStatus(request.getRequestType(),workflowId,request.getComplaintId(),request.getUserCode());
         }
-        return "--in progress--";
+        return currStatus;
     }
 
 
@@ -101,7 +99,7 @@ public class WorkflowProcess {
             wfkDiary.setSubStatus(String.valueOf(workflowStatusMasterRepository.findStatusCodeFromStatus(status).orElse(250)));
             wfkDiary.setUpdatedAt(LocalDateTime.now());
             wfkDiary.setUpdatedBy(userCode);
-            wfkDiary.setRemarks("first entry");
+            wfkDiary.setRemarks("");
             workflowDiaryRepository.save(wfkDiary);
 
             //saving in workflow status
